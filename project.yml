@@ -10,20 +10,17 @@
   :use_test_preprocessor: TRUE
   :use_auxiliary_dependencies: TRUE
   :build_root: build
-  :release_build: TRUE
+#  :release_build: TRUE
   :test_file_prefix: test_
   :which_ceedling: vendor/ceedling
   :default_tasks:
     - test:all
 
-:release_build:
-  :output: TreeTraversal.exe
-  :use_assembly: FALSE
+#:release_build:
+#  :output: AVL.out
+#  :use_assembly: FALSE
 
 :environment:
-
-:module_generator:
-  :naming: bumpy
 
 :extension:
   :executable: .exe

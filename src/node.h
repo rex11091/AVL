@@ -7,6 +7,7 @@ typedef struct Node Node;
 struct Node {
   Node *left;
   Node *right;
+  int balanceFactor;
   uint32_t data;    // will be change ltr ,no neccessary integer
 };
 
