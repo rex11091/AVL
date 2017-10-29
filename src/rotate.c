@@ -1,7 +1,6 @@
 #include "rotate.h"
 
 
-
 /**
 ---------rotateleft-----------------
 *        10            30
