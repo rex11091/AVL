@@ -2,28 +2,11 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "node.h"
-//get balanceFactor
-int getbalanceFactor(Node *Node)
-{
-    if (Node == NULL)
-        return 0;
-    return Node->balanceFactor;
-}
+#include "rotate.h"
 
-/* GiveNewNode function that allocates a new node with the given data and
-    NULL left and right pointers. */
-Node *GiveNewNode(int data)
-{
-    Node  *root = (Node *)malloc(sizeof(Node));
-    root->data   = data;
-    root->left   = NULL;
-    root->right  = NULL;
-    root->balanceFactor = 0;  // new node is initially added at leaf
-    return(root);
-}
 //insert new node
-Node *insert(Node **rootPtr, Node *nodeToAdd)
-{
+
+int insert(Node **rootPtr, Node *nodeToAdd){
 
     if (*rootPtr == NULL){
         *rootPtr = nodeToAdd;
@@ -38,10 +21,103 @@ Node *insert(Node **rootPtr, Node *nodeToAdd)
       {
         (*rootPtr)->right = insert(&(*rootPtr)->right,nodeToAdd);
       }
-      else
+      else{}
         return *rootPtr;
       }
 
         return *rootPtr;
 
  }
+/*
+int avlBalanceRightTree(Node **rootPtr){
+  Node *node = *rootPtr;
+  Node *child = node->right;
+
+  if(child->balanceFactor == 1){
+    node->balanceFactor = 0;
+    child->balanceFactor = 0;
+  }
+  else if(child->balanceFactor == 0){
+    node->balanceFactor = 1;
+    child->balanceFactor = -1;
+  }
+  *rootPtr = rotateleft(*rootPtr) ;
+  return 0;
+}*/
+
+int avlBalanceRightTree(Node **rootPtr){
+  Node *node = *rootPtr;
+  Node *child = node->right;
+  Node *grandChild = node->right->left;
+
+  if(child->balanceFactor == -1){
+    if(grandChild->balanceFactor == -1)
+    {
+      node->balanceFactor = 0;
+      child->balanceFactor = 1;
+      grandChild->balanceFactor = 0;
+    }
+    else if(grandChild->balanceFactor == 0)
+    {
+      node->balanceFactor = 0;
+      child->balanceFactor = 0;
+      grandChild->balanceFactor = 0;
+    }
+    else if(grandChild->balanceFactor == 1)
+    {
+      node->balanceFactor = -1;
+      child->balanceFactor = 0;
+      grandChild->balanceFactor = 0;
+    }
+    *rootPtr = rotaterightleft(*rootPtr);
+    return 0;
+  }
+
+  else if(child->balanceFactor == 1){
+      node->balanceFactor = 0;
+      child->balanceFactor = 0;
+    }
+  else if(child->balanceFactor == 0){
+      node->balanceFactor = 1;
+      child->balanceFactor = -1;
+    }
+    *rootPtr = rotateleft(*rootPtr) ;
+    return 0;
+
+}
+
+int avlBalanceLeftTree(Node **rootPtr){
+  Node *node = *rootPtr;
+  Node *child = node->left;
+  Node *grandChild = node->left->right;
+
+  if(child->balanceFactor == 1){
+    if(grandChild->balanceFactor == 1){
+      node->balanceFactor = 0;
+      child->balanceFactor = -1;
+      grandChild->balanceFactor = 0;
+    }
+    else if(grandChild->balanceFactor == 0){
+      node->balanceFactor = 0;
+      child->balanceFactor = 0;
+      grandChild->balanceFactor = 0;
+    }
+    else if(grandChild->balanceFactor == -1){
+      node->balanceFactor = 1;
+      child->balanceFactor = 0;
+      grandChild->balanceFactor = 0;
+    }
+    *rootPtr = rotateleftright(*rootPtr);
+    return 0;
+  }
+  else if(child->balanceFactor == -1){
+    node->balanceFactor = 0;
+    child->balanceFactor = 0;
+  }
+  else if(child->balanceFactor == 0){
+    node->balanceFactor = 1;
+    child->balanceFactor = -1;
+  }
+  *rootPtr = rotateright(*rootPtr);
+  return 0;
+}

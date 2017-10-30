@@ -10,6 +10,15 @@
 *        25  40       25
 *
 **/
+/**
+---------rotateLeft----------------------
+*        30 (+2)                   40
+*          \                     /   \
+*           40 (+1)   ------->  30    50
+*            \
+*            50
+*
+**/
 Node *rotateleft(Node *node){
   Node *root;
   root = node->right;
@@ -17,6 +26,18 @@ Node *rotateleft(Node *node){
   root->left = node;
   return root;
 }
+Node *rotateleft1(Node *node){
+  Node *root;
+  if(node->balanceFactor == 2 && node->right->balanceFactor == 1)
+  root = node->right;
+  node->right = node->right->left;
+  root->left = node;
+  node->balanceFactor = node -> balanceFactor - 2;
+  root->balanceFactor = root -> balanceFactor -1;
+  return root;
+}
+
+
 /**
 ---------rotateright-----------------
 *        30         10
