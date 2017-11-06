@@ -25,6 +25,13 @@ void giveInitdata(void){
   node50.data = 50 ;
   node55.data = 55 ;
   node60.data = 60 ;
+  node65.data = 65 ;
+  node70.data = 70 ;
+  node75.data = 75 ;
+  node80.data = 80 ;
+  node85.data = 85 ;
+  node90.data = 90 ;
+  node95.data = 95 ;
   node100.data = 100 ;
 
 }

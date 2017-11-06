@@ -4,7 +4,68 @@
 #include "node.h"
 #include "rotate.h"
 
-//insert new node
+
+/*
+
+Node *searchNearest(Node **numberTofind,Node *Closer){
+}
+
+
+
+
+
+
+Node *remove(Node **rootPtr,Node *nodeToRemove){
+      if(*rootPtr == nodeToRemove)
+        *rootPtr = NULL:
+        return *rootPtr;
+      }else{
+        if((*rootPtr)->left->data == nodeToRemove->data)
+          (*rootPtr->left) = remove(*rootPtr)->left,nodeToRemove);
+
+        else if((*rootPtr)->right->data==nodeToRemove->data)
+          (*rootPtr)->right = remove(&(*rootPtr)->right,nodeToRemove);
+        return *rootPtr;
+      }
+        return *rootPtr;
+}
+
+
+
+int insert(Node **rootPtr, Node *nodeToAdd){
+
+    if (*rootPtr == NULL){
+        *rootPtr = nodeToAdd;
+        return 0;
+      }
+    else{
+      if (nodeToAdd->data < (*rootPtr)->data)
+      {
+        (*rootPtr)->left = insert(&(*rootPtr)->left,nodeToAdd);
+        (*rootPtr)->balanceFactor -= 1;
+      }
+      else if (nodeToAdd->data > (*rootPtr)->data)
+      {
+        (*rootPtr)->right = insert(&(*rootPtr)->right,nodeToAdd);
+        (*rootPtr)->balanceFactor += 1;
+      }
+    }
+    if((*rootPtr)->balanceFactor >= 2)
+        avlBalanceRightTree(&(*rootPtr));
+    else if((*rootPtr)->balanceFactor <= -2)
+        avlBalanceLeftTree(&(*rootPtr));
+    else{
+       *rootPtr = *rootPtr;
+      }
+        return heighchange ?1:0;
+
+ }
+ */
+
+
+
+
+
 
 Node *insert(Node **rootPtr, Node *nodeToAdd){
 
@@ -29,7 +90,7 @@ Node *insert(Node **rootPtr, Node *nodeToAdd){
     else if((*rootPtr)->balanceFactor <= -2)
         avlBalanceLeftTree(&(*rootPtr));
     else{
-        *rootPtr = *rootPtr;
+       *rootPtr = *rootPtr;
       }
         return *rootPtr;
 

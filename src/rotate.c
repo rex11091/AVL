@@ -26,16 +26,6 @@ Node *rotateleft(Node *node){
   root->left = node;
   return root;
 }
-Node *rotateleft1(Node *node){
-  Node *root;
-  if(node->balanceFactor == 2 && node->right->balanceFactor == 1)
-  root = node->right;
-  node->right = node->right->left;
-  root->left = node;
-  node->balanceFactor = node -> balanceFactor - 2;
-  root->balanceFactor = root -> balanceFactor -1;
-  return root;
-}
 
 
 /**

@@ -23,111 +23,6 @@ void setUp(void){
 void tearDown(void){
 };
 
-void test_insert_given_40_30_insert_20_expect_balance(void){
-
-    initNode(&node30,NULL,NULL,0);
-    initNode(&node40,&node30,NULL,-1);
-
-    Node *root = &node40;
-    insert(&root,&node20);
-    TEST_ASSERT_EQUAL_PTR(&node30,root);
-    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node40);
-    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node20);
-    TEST_ASSERT_EQUAL_NODE(&node20,&node40,0,&node30);
-}
-
-
-
-/**
----------test_givenewNode-----------------
-*
-*
-*      10     -> + 2     10
-*     / \               / \
-*    5  20             5  20
-*                     /
-*                    2
-
-void test_inset_newNode(void)
-{   Node *root;
-    root = GiveNewNode(100);
-    TEST_ASSERT_EQUAL(0,root->balanceFactor);
-    TEST_ASSERT_EQUAL_PTR(NULL,root->left);
-    TEST_ASSERT_EQUAL_PTR(NULL,root->right);
-}
-**/
-/**
-----------------test_insert_right----------
-*        10            10
-*         \           /   \
-*          30  ->    5    30
-*
-**/
-void test_insert_right(void){
-   Node *root = &node10;
-    initNode(&node10,NULL,&node30,1);
-
-    insert(&root,&node5);
-    TEST_ASSERT_EQUAL_PTR(&node10,root);
-    TEST_ASSERT_EQUAL_PTR(&node5,node10.left);
-    TEST_ASSERT_EQUAL_PTR(&node30,node10.right);
-
-}
-
-/**
-----------------test_insert_left----------
-*        10              10
-*       /  \           /   \
-*      5       ->    5     30
-*
-**/
-void test_insert_left(void)
-{   Node *root = &node10;
-    initNode(&node10,&node5,NULL,-1);
-
-    insert(&root,&node30);
-    TEST_ASSERT_EQUAL_PTR(&node10,root);
-    TEST_ASSERT_EQUAL_PTR(&node5,node10.left);
-    TEST_ASSERT_EQUAL_PTR(&node30,node10.right);
-
-}
-/**
-----------------test_insert_leftChild_left----------
-*        10              10
-*       /  \           /   \
-*      5    30   ->   5     30
-*                    /
-*                   1
-**/
-void test_insert_1_t0_5_leftchild(void)
-{   Node *root = &node10;
-    initNode(&node10,&node5,&node30,0);
-    initNode(&node5,NULL,NULL,0);
-
-    insert(&root,&node1);
-    TEST_ASSERT_EQUAL_PTR(&node10,root);
-    TEST_ASSERT_EQUAL_PTR(&node1,node5.left);
-    TEST_ASSERT_EQUAL_PTR(&node30,node10.right);
-    TEST_ASSERT_EQUAL_PTR(&node5,node10.left);
-
-}
-
-void test_insert_40_t0_30_rightchild(void)
-{   Node *root = &node10;
-    initNode(&node10,&node5,&node30,0);
-    initNode(&node5,NULL,NULL,0);
-    initNode(&node30,NULL,NULL,0);
-
-    insert(&root,&node40);
-    TEST_ASSERT_EQUAL_PTR(&node10,root);
-    TEST_ASSERT_EQUAL_PTR(NULL,node5.left);
-    TEST_ASSERT_EQUAL_PTR(NULL,node5.right);
-    TEST_ASSERT_EQUAL_PTR(&node40,node30.right);
-    TEST_ASSERT_EQUAL_PTR(&node30,node10.right);
-    TEST_ASSERT_EQUAL_PTR(&node5,node10.left);
-
-}
-
 /*      ___________________________________________________________________________________________
  *     |_Current_Node_|__Child_Node_| G.Child_Node |________Action________|_Root_|_Child_|_G.Child_|
  *     |_______+2_____|_(R)__+1_____|______X_______|________Rotate_Left___|___0__|___0___|____X____|
@@ -135,8 +30,8 @@ void test_insert_40_t0_30_rightchild(void)
  *     |_______+2_____|_(R)__-1_____|_____-1_______|___Rotate_RightLeft___|___0__|___1___|____0____|
  *     |_______+2_____|_(R)__-1_____|______0_______|___Rotate_RightLeft___|___0__|___0___|____0____|
  *     |_______+2_____|_(R)__-1_____|_____+1_______|___Rotate_RightLeft___|__-1__|___0___|____0____|
- *     |_______-2_____|_(L)__-1_____|______X_______|________Rotate_Left___|___0__|___0___|____X____|
- *     |_______-2_____|_(L)___0_____|______X_______|________Rotate_Left___|___1__|__-1___|____X____|
+ *     |_______-2_____|_(L)__-1_____|______X_______|________Rotate_right__|___0__|___0___|____X____|
+ *     |_______-2_____|_(L)___0_____|______X_______|________Rotate_right__|___1__|__-1___|____X____|
  *     |_______-2_____|_(L)__+1_____|_____+1_______|___Rotate_LeftRight___|___0__|__-1___|____0____|
  *     |_______-2_____|_(L)__+1_____|______0_______|___Rotate_LeftRight___|___0__|___0___|____X____|
  *     |_______-2_____|_(L)__+1_____|_____-1_______|___Rotate_LeftRight___|___1__|___0___|____0____|
@@ -422,4 +317,125 @@ void test_avlBalanceleftRightTree_given_AVL_need_rotateLeftRight_condition3_expe
      TEST_ASSERT_EQUAL_NODE(&node45,&node55,0,&node50);
      TEST_ASSERT_EQUAL_NODE(NULL,&node100,1,&node90);
 
+}
+/**
+---------insert 30----------------------
+*        0      30 (0)
+*          --->                       /
+*
+*
+*
+*
+**/
+
+void test_insert_given_NULL_insert_30_expect_root_30_nochild(void){
+
+    initNode(&node30,NULL,NULL,0);
+    Node *root = NULL;
+    insert(&root,&node30);
+    TEST_ASSERT_EQUAL_PTR(&node30,root);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node30);
+}
+/**
+---------insert 20 with root 40----------------------
+*        40 (0)   add 20                40 (-1)
+*                                      /
+*               ------------------>  20
+*
+*
+*
+**/
+void test_insert_given_40_insert_20_expect_balance(void){
+
+
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,NULL,NULL,0);
+
+    Node *root = &node40;
+    insert(&root,&node20);
+    TEST_ASSERT_EQUAL_PTR(&node40,root);
+    TEST_ASSERT_EQUAL_NODE(&node20,NULL,-1,&node40);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node20);
+}
+
+/**
+---------insert 20 to 30->left----------------------
+*        40 (-1)   add 20 &           30 (0)
+*        /      rotate    right      /   \
+*      30 (0) ------------------>  20    40 (0)
+*
+*
+*
+**/
+void test_insert_given_40_30_insert_20_expect_balance(void){
+
+    initNode(&node30,NULL,NULL,0);
+    initNode(&node20,NULL,NULL,0);
+    initNode(&node40,&node30,NULL,-1);
+
+    Node *root = &node40;
+    insert(&root,&node20);
+    TEST_ASSERT_EQUAL_PTR(&node30,root);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node40);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node20);
+    TEST_ASSERT_EQUAL_NODE(&node20,&node40,0,&node30);
+}
+
+/**
+---------insert   &    rotateleftRight(1)----------------------
+*        90(-1)               90 (-2)                                 60 (0)
+*       /  \    add 70        /  \            rotateLeftRight        /     \
+*     50   100 --------> (1)50   100      ------------------>      50 (-1)  90 (0)
+*    /  \                  /  \                                   /         / \
+*   45   60              45     60(1)                             45       70 100
+*                               \
+*                               70
+**/
+void test_insert_given_90_50_100_45_60_insert_70_expect_balance(void){
+
+     initNode(&node45,NULL,NULL,0);
+     initNode(&node60,NULL,NULL,0);
+     initNode(&node70,NULL,NULL,0);
+     initNode(&node100,NULL,NULL,0);
+     initNode(&node90,&node50,&node100,-1);
+     initNode(&node50,&node45,&node60,0);
+
+     Node *root = &node90;
+     insert(&root,&node70);
+     TEST_ASSERT_EQUAL_PTR(&node60,root);
+     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node45);
+     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node55);
+     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node70);
+     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node100);
+     TEST_ASSERT_EQUAL_NODE(&node50,&node90,0,&node60);
+     TEST_ASSERT_EQUAL_NODE(&node45,NULL,-1,&node50);
+     TEST_ASSERT_EQUAL_NODE(&node70,&node100,0,&node90);
+}
+
+/**
+---------insert   &    rotateleftRight(1)----------------------
+*        90(-1)               90 (-1)
+*       /  \    add 60        /  \
+*     50   100 --------> (0)50   100
+*    /                     /  \
+*   45                   45     60
+*
+*
+**/
+void test_insert_given_90_50_1pect_balance(void){
+
+     initNode(&node45,NULL,NULL,0);
+     initNode(&node60,NULL,NULL,0);
+     initNode(&node100,NULL,NULL,0);
+     initNode(&node90,&node50,&node100,-1);
+     initNode(&node50,&node45,NULL,-1);
+
+     Node *root = &node90;
+     insert(&root,&node60);
+     TEST_ASSERT_EQUAL_PTR(&node90,root);
+     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node45);
+     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node60);
+     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node100);
+     TEST_ASSERT_EQUAL_NODE(&node45,&node60,0,&node50);
+     TEST_ASSERT_EQUAL_NODE(&node50,&node100,-1,&node90);
 }
