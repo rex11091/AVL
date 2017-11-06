@@ -6,7 +6,7 @@
 
 //insert new node
 
-int insert(Node **rootPtr, Node *nodeToAdd){
+Node *insert(Node **rootPtr, Node *nodeToAdd){
 
     if (*rootPtr == NULL){
         *rootPtr = nodeToAdd;
@@ -16,15 +16,21 @@ int insert(Node **rootPtr, Node *nodeToAdd){
       if (nodeToAdd->data < (*rootPtr)->data)
       {
         (*rootPtr)->left = insert(&(*rootPtr)->left,nodeToAdd);
+        (*rootPtr)->balanceFactor -= 1;
       }
       else if (nodeToAdd->data > (*rootPtr)->data)
       {
         (*rootPtr)->right = insert(&(*rootPtr)->right,nodeToAdd);
+        (*rootPtr)->balanceFactor += 1;
       }
-      else{}
-        return *rootPtr;
+    }
+    if((*rootPtr)->balanceFactor >= 2)
+        avlBalanceRightTree(&(*rootPtr));
+    else if((*rootPtr)->balanceFactor <= -2)
+        avlBalanceLeftTree(&(*rootPtr));
+    else{
+        *rootPtr = *rootPtr;
       }
-
         return *rootPtr;
 
  }

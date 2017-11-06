@@ -23,6 +23,21 @@ void setUp(void){
 void tearDown(void){
 };
 
+void test_insert_given_40_30_insert_20_expect_balance(void){
+
+    initNode(&node30,NULL,NULL,0);
+    initNode(&node40,&node30,NULL,-1);
+
+    Node *root = &node40;
+    insert(&root,&node20);
+    TEST_ASSERT_EQUAL_PTR(&node30,root);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node40);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node20);
+    TEST_ASSERT_EQUAL_NODE(&node20,&node40,0,&node30);
+}
+
+
+
 /**
 ---------test_givenewNode-----------------
 *
