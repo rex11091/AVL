@@ -431,7 +431,7 @@ void test_insert_given_90_50_1pect_balance(void){
      initNode(&node50,&node45,NULL,-1);
 
      Node *root = &node90;
-     insert(&root,&node60);
+     insert1(&root,&node60);
      TEST_ASSERT_EQUAL_PTR(&node90,root);
      TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node45);
      TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node60);

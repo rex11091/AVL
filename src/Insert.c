@@ -31,23 +31,36 @@ Node *remove(Node **rootPtr,Node *nodeToRemove){
 }
 
 
-
-int insert(Node **rootPtr, Node *nodeToAdd){
-
+*/
+int insert1(Node **rootPtr, Node *nodeToAdd){
+  int m;//heigh
     if (*rootPtr == NULL){
         *rootPtr = nodeToAdd;
-        return 0;
+        return m=1;
       }
     else{
       if (nodeToAdd->data < (*rootPtr)->data)
       {
-        (*rootPtr)->left = insert(&(*rootPtr)->left,nodeToAdd);
+      m = insert1(&(*rootPtr)->left,nodeToAdd);   //if adding data will change the heigh,m =1 else m =0;
+        if(m==1){
         (*rootPtr)->balanceFactor -= 1;
+          if((*rootPtr)->balanceFactor==0)
+          m=0;
+        }
+      else
+      (*rootPtr)->balanceFactor =(*rootPtr)->balanceFactor;
+
       }
       else if (nodeToAdd->data > (*rootPtr)->data)
       {
-        (*rootPtr)->right = insert(&(*rootPtr)->right,nodeToAdd);
+      m = insert1(&(*rootPtr)->right,nodeToAdd);
+        if(m==1){
         (*rootPtr)->balanceFactor += 1;
+          if((*rootPtr)->balanceFactor==0)
+            m=0;;
+          }
+        else
+          (*rootPtr)->balanceFactor =(*rootPtr)->balanceFactor;
       }
     }
     if((*rootPtr)->balanceFactor >= 2)
@@ -57,10 +70,9 @@ int insert(Node **rootPtr, Node *nodeToAdd){
     else{
        *rootPtr = *rootPtr;
       }
-        return heighchange ?1:0;
-
+        return m;
  }
- */
+
 
 
 
