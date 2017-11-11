@@ -31,52 +31,6 @@ Node *remove(Node **rootPtr,Node *nodeToRemove){
 }
 
 
-*/
-int insert1(Node **rootPtr, Node *nodeToAdd){
-  int m;//heigh
-    if (*rootPtr == NULL){
-        *rootPtr = nodeToAdd;
-        return m=1;
-      }
-    else{
-      if (nodeToAdd->data < (*rootPtr)->data)
-      {
-      m = insert1(&(*rootPtr)->left,nodeToAdd);   //if adding data will change the heigh,m =1 else m =0;
-        if(m==1){
-        (*rootPtr)->balanceFactor -= 1;
-          if((*rootPtr)->balanceFactor==0)
-          m=0;
-        }
-      else
-      (*rootPtr)->balanceFactor =(*rootPtr)->balanceFactor;
-
-      }
-      else if (nodeToAdd->data > (*rootPtr)->data)
-      {
-      m = insert1(&(*rootPtr)->right,nodeToAdd);
-        if(m==1){
-        (*rootPtr)->balanceFactor += 1;
-          if((*rootPtr)->balanceFactor==0)
-            m=0;;
-          }
-        else
-          (*rootPtr)->balanceFactor =(*rootPtr)->balanceFactor;
-      }
-    }
-    if((*rootPtr)->balanceFactor >= 2)
-        avlBalanceRightTree(&(*rootPtr));
-    else if((*rootPtr)->balanceFactor <= -2)
-        avlBalanceLeftTree(&(*rootPtr));
-    else{
-       *rootPtr = *rootPtr;
-      }
-        return m;
- }
-
-
-
-
-
 
 
 Node *insert(Node **rootPtr, Node *nodeToAdd){
@@ -107,7 +61,6 @@ Node *insert(Node **rootPtr, Node *nodeToAdd){
         return *rootPtr;
 
  }
-/*
 int avlBalanceRightTree(Node **rootPtr){
   Node *node = *rootPtr;
   Node *child = node->right;
@@ -124,6 +77,47 @@ int avlBalanceRightTree(Node **rootPtr){
   return 0;
 }*/
 
+int insert(Node **rootPtr, Node *nodeToAdd){
+  int m;//heigh
+    if (*rootPtr == NULL){
+        *rootPtr = nodeToAdd;
+        return m=1;
+      }
+    else{
+      if (nodeToAdd->data < (*rootPtr)->data)
+      {
+      m = insert(&(*rootPtr)->left,nodeToAdd);   //if adding data will change the heigh,m =1 else m =0;
+        if(m==1){
+        (*rootPtr)->balanceFactor -= 1;
+          if((*rootPtr)->balanceFactor==0)
+          m=0;
+        }
+      else
+      (*rootPtr)->balanceFactor =(*rootPtr)->balanceFactor;
+
+      }
+      else if (nodeToAdd->data > (*rootPtr)->data)
+      {
+      m = insert(&(*rootPtr)->right,nodeToAdd);
+        if(m==1){
+        (*rootPtr)->balanceFactor += 1;
+          if((*rootPtr)->balanceFactor==0)
+            m=0;;
+          }
+        else
+          (*rootPtr)->balanceFactor =(*rootPtr)->balanceFactor;
+      }
+    }
+    if((*rootPtr)->balanceFactor >= 2)
+        avlBalanceRightTree(&(*rootPtr));
+    else if((*rootPtr)->balanceFactor <= -2)
+        avlBalanceLeftTree(&(*rootPtr));
+    else{
+       *rootPtr = *rootPtr;
+      }
+        return m;
+ }
+/*
 int avlBalanceRightTree(Node **rootPtr){
   Node *node = *rootPtr;
   Node *child = node->right;
@@ -200,3 +194,4 @@ int avlBalanceLeftTree(Node **rootPtr){
   *rootPtr = rotateright(*rootPtr);
   return 0;
 }
+*/

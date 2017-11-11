@@ -78,3 +78,80 @@ Node *rotaterightleft(Node *node){
   root = rotateleft(node);
   return root;
 }
+
+int avlBalanceRightTree(Node **rootPtr){
+  Node *node = *rootPtr;
+  Node *child = node->right;
+  Node *grandChild = node->right->left;
+
+  if(child->balanceFactor == -1){
+    if(grandChild->balanceFactor == -1)
+    {
+      node->balanceFactor = 0;
+      child->balanceFactor = 1;
+      grandChild->balanceFactor = 0;
+    }
+    else if(grandChild->balanceFactor == 0)
+    {
+      node->balanceFactor = 0;
+      child->balanceFactor = 0;
+      grandChild->balanceFactor = 0;
+    }
+    else if(grandChild->balanceFactor == 1)
+    {
+      node->balanceFactor = -1;
+      child->balanceFactor = 0;
+      grandChild->balanceFactor = 0;
+    }
+    *rootPtr = rotaterightleft(*rootPtr);
+    return 0;
+  }
+
+  else if(child->balanceFactor == 1){
+      node->balanceFactor = 0;
+      child->balanceFactor = 0;
+    }
+  else if(child->balanceFactor == 0){
+      node->balanceFactor = 1;
+      child->balanceFactor = -1;
+    }
+    *rootPtr = rotateleft(*rootPtr) ;
+    return 0;
+
+}
+
+int avlBalanceLeftTree(Node **rootPtr){
+  Node *node = *rootPtr;
+  Node *child = node->left;
+  Node *grandChild = node->left->right;
+
+  if(child->balanceFactor == 1){
+    if(grandChild->balanceFactor == 1){
+      node->balanceFactor = 0;
+      child->balanceFactor = -1;
+      grandChild->balanceFactor = 0;
+    }
+    else if(grandChild->balanceFactor == 0){
+      node->balanceFactor = 0;
+      child->balanceFactor = 0;
+      grandChild->balanceFactor = 0;
+    }
+    else if(grandChild->balanceFactor == -1){
+      node->balanceFactor = 1;
+      child->balanceFactor = 0;
+      grandChild->balanceFactor = 0;
+    }
+    *rootPtr = rotateleftright(*rootPtr);
+    return 0;
+  }
+  else if(child->balanceFactor == -1){
+    node->balanceFactor = 0;
+    child->balanceFactor = 0;
+  }
+  else if(child->balanceFactor == 0){
+    node->balanceFactor = 1;
+    child->balanceFactor = -1;
+  }
+  *rootPtr = rotateright(*rootPtr);
+  return 0;
+}
