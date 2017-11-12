@@ -333,9 +333,9 @@ void test_avlBalanceLeftTree_given_40_30_20_35_expect_balance(void){
     Node *root = &node40;
     avlBalanceLeftTree(&root);
     TEST_ASSERT_EQUAL_PTR(&node30,root);
-    TEST_ASSERT_EQUAL_NODE(&node35,NULL,1,&node40);
+    TEST_ASSERT_EQUAL_NODE(&node35,NULL,-1,&node40);
     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node20);
-    TEST_ASSERT_EQUAL_NODE(&node20,&node40,-1,&node30);
+    TEST_ASSERT_EQUAL_NODE(&node20,&node40,1,&node30);
 }
 /**
 ---------rotateleftRight(2)----------------------

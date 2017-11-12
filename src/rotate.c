@@ -149,8 +149,8 @@ int avlBalanceLeftTree(Node **rootPtr){
     child->balanceFactor = 0;
   }
   else if(child->balanceFactor == 0){
-    node->balanceFactor = 1;
-    child->balanceFactor = -1;
+    node->balanceFactor = -1;
+    child->balanceFactor = 1;
   }
   *rootPtr = rotateright(*rootPtr);
   return 0;
