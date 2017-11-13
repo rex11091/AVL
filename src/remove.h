@@ -8,3 +8,6 @@
 
  Node *findnearest(Node* node);
  Node *RemoveNode(Node **rootPtr, int nodeToRemove);
+ Node *RemoveNode1(Node **rootPtr, int nodeToRemove);
+ int deleteNode1(Node **root, int nodeToRemove);
+ int deleteNode(Node **root, int nodeToRemove);

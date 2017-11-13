@@ -16,11 +16,10 @@
      return current ;
  }
 
-
+/*
 //recursive remove node
 Node *RemoveNode(Node **root, int nodeToRemove)
  {
-    int m;
      //standard removing
      if (*root == NULL)
          return *root;
@@ -58,7 +57,7 @@ Node *RemoveNode(Node **root, int nodeToRemove)
             //find the nearest 1 in removenode->right->most left
             Node* temp1 = findnearest((*root)->right);
             //delete the node of nearest after store the content to temp
-            RemoveNode(&(*root)->right, temp1->data);
+           RemoveNode((&(*root)), temp1->data);
             // Copy the nearest's data to this node
             temp1->balanceFactor = ((*root)->balanceFactor);
             temp1->left = (*root)->left;
@@ -79,3 +78,148 @@ Node *RemoveNode(Node **root, int nodeToRemove)
        }
     return *root;
   }
+  */
+
+
+
+int deleteNode1(Node **root, int nodeToRemove){
+      int m; // to determine either root's heigh change or unchange
+       //standard removing
+       // 0 is no height change
+       if (*root == NULL)
+           return 1; //heigh change
+
+       if(nodeToRemove < (*root)->data ){
+         m=deleteNode(&(*root)->left, nodeToRemove);
+         if(m==1)
+            (*root)->balanceFactor +=1;
+            if((*root)->balanceFactor != 0)
+            m = 0;
+       }
+       else if(nodeToRemove > (*root)->data ){
+         m=deleteNode(&(*root)->right, nodeToRemove);
+         if(m==1)
+            (*root)->balanceFactor -=1;
+            if((*root)->balanceFactor != 0)
+            m = 0;
+       }
+       else if(nodeToRemove = (*root)->data ){
+           // node with only one child or no child
+         if( ( (*root)->left == NULL) || ( (*root)->right == NULL) )
+         {
+             Node *temp = (*root)->left ?  (*root)->left : (*root)->right;
+
+             // No child case
+             if (temp == NULL)
+             {
+                 temp = *root;
+                 *root = NULL;
+                 m=1; //heigh change
+             }
+             else // One child case
+             {
+              *root = temp; // Copy the contents of the non-empty child
+              m=1; // height change
+             }
+          }
+          else
+          {
+            // node with two children case
+            //find the nearest in removenode->right->most left
+            Node* temp1 = findnearest((*root)->right);
+            //delete the node of nearest after store the content to temp
+            m=deleteNode((&(*root)), temp1->data);
+            // Copy the nearest's data to this node
+            temp1->balanceFactor = ((*root)->balanceFactor);
+            temp1->left = (*root)->left;
+            temp1->right= (*root)->right;
+            (*root) = temp1;
+			       m=1;
+
+              if((*root)->balanceFactor >= 2)
+                avlBalanceRightTree(&(*root));
+              else if((*root)->balanceFactor <= -2)
+                avlBalanceLeftTree(&(*root));
+              else{
+                 *root = *root;
+          }
+        }
+      if(*root==NULL){
+        return m;
+     }
+   }
+       return m;;
+}
+
+
+
+int deleteNode(Node **root, int nodeToRemove){
+      int m; // to determine either root's heigh change or unchange
+       //standard removing
+       // 0 is no height change
+       if (*root == NULL)
+           return 1; //heigh change
+
+       if(nodeToRemove < (*root)->data ){
+         m=deleteNode(&(*root)->left, nodeToRemove);
+         if(m==1)
+            (*root)->balanceFactor +=1;
+            if((*root)->balanceFactor != 0)
+            m = 0;
+       }
+       else if(nodeToRemove > (*root)->data ){
+         m=deleteNode(&(*root)->right, nodeToRemove);
+         if(m==1)
+            (*root)->balanceFactor -=1;
+            if((*root)->balanceFactor != 0)
+            m = 0;
+       }
+       else if(nodeToRemove == (*root)->data ){
+           // node with only one child or no child
+         if( ( (*root)->left == NULL) || ( (*root)->right == NULL) )
+         {
+             Node *temp = (*root)->left ?  (*root)->left : (*root)->right;
+
+             // No child case
+             if (temp == NULL)
+             {
+                 temp = *root;
+                 *root = NULL;
+                 m=1; //heigh change
+             }
+             else // One child case
+             {
+              *root = temp; // Copy the contents of the non-empty child
+              m=1; // height change
+             }
+          }
+          else
+          {
+            // node with two children case
+            //find the nearest in removenode->right->most left
+            Node* temp1 = findnearest((*root)->right);
+            //delete the node of nearest after store the content to temp
+            // Copy the nearest's data to this node
+            m=deleteNode((&(*root)), temp1->data);
+            temp1->balanceFactor = ((*root)->balanceFactor);
+            temp1->left = (*root)->left;
+            temp1->right= (*root)->right;
+            (*root) = temp1;
+			       m=1;
+             if(*root==NULL){
+               return m;
+             }
+             if((*root)->balanceFactor >= 2)
+               avlBalanceRightTree(&(*root));
+             else if((*root)->balanceFactor <= -2)
+               avlBalanceLeftTree(&(*root));
+             else{
+                *root = *root;
+               }
+        }
+        if(*root==NULL){
+          return m;
+        }
+    }
+    return m;
+}

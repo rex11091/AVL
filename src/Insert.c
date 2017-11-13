@@ -81,7 +81,7 @@ int insert(Node **rootPtr, Node *nodeToAdd){
   int m;//heigh
     if (*rootPtr == NULL){
         *rootPtr = nodeToAdd;
-        return m=1;
+        return 1;
       }
     else{
       if (nodeToAdd->data < (*rootPtr)->data)
