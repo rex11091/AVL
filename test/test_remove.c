@@ -76,7 +76,7 @@ void test_RemoveNode_given_40_with_child_30_delete_30_expect_40_only(void){
 ---------------------------------remove 50------------------------------
 *       40(0)                              40 (-1)
 *       / \          remove 50            /
-*   30 (0) 50(0)   --------------->     30
+*   30 (0) 50(0)   --------------->     30 (0)
 *
 **/
 void test_RemoveNode_given_40_with_child_30_50__delete_50_expect_40_30(void){
@@ -95,9 +95,9 @@ void test_RemoveNode_given_40_with_child_30_50__delete_50_expect_40_30(void){
 ---------------------------------remove 50------------------------------
 *       40(-1)                            40 (-2)                                  30 (0)
 *       / \          remove 50          /                 rotate right           /  \
-*   30 (-1) 50(0)   --------------->   30(-1)            ------------>         20    40 (0)
+*   30 (-1) 50(0)   --------------->   30(-1)            ------------>       (0 20    40 (0)
 *   /                                 /
-*  20                               20
+*  20 (0)                            20 (0)
 *
 **/
 void test_RemoveNode_after_remove_rotate_right(void){
@@ -541,7 +541,7 @@ void test_RemoveNode_test5(void){
 ---------------------------------remove 30------------------------------
 *       40(1)                           45 (0)
 *       / \          remove 30         /  \
-*    30    50 (-1)  --------------->  30    50
+*    30    50 (-1)  ---------->    30 (0)   50 (0)
 *          /
 *         45
 **/
@@ -734,4 +734,27 @@ void test_remove_testing(void){
   TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node50);
   TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node60);
 
+}
+/**
+ *
+ *         5                                 5
+ *       /  \                              /  \
+ *      1   15(0)     delete node 15       1  20
+ *         /  \          ---->                /
+ *        10  20                              10
+ */
+void test_deleteLeaf_given_deletedNode_left_right_Not_null_delete_15(void)
+{
+    initNode(&node5, &node1, &node15, 1);
+    initNode(&node15, &node10, &node20, 0);
+    initNode(&node10, NULL, NULL, 0);
+    initNode(&node20, NULL, NULL, 0);
+    initNode(&node1, NULL, NULL, 0);
+
+  Node *root = &node5;
+
+    avlRemove(&root,15);
+    TEST_ASSERT_EQUAL_PTR(&node5,root);
+    TEST_ASSERT_EQUAL_NODE(&node1,&node20,1,&node5);;
+    TEST_ASSERT_EQUAL_NODE(&node10,NULL,-1,&node20);
 }

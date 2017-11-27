@@ -8,6 +8,7 @@
 
 Node *findnearest(Node **rootPtr, int *heightchange)
 {
+Node *temp1;
 Node *current = (*rootPtr)->left;
     /* loop down to find the leftmost leaf */
  if(current!=NULL){
@@ -39,51 +40,11 @@ Node *current = (*rootPtr)->left;
         }
   }
   else
-     *heightchange = CHANGED;
-     return *rootPtr;
- }
-
-Node *findnearest1(Node *rootPtr, int *heightchange)
-{
-Node *current = rootPtr->left;
-    /* loop down to find the leftmost leaf */
- if(current!=NULL){
-      if(current->left != NULL)
-         findnearest1(rootPtr->left,heightchange);
-     else{
-         if(current->right !=NULL){
-           rootPtr->left = current->right;
-           rootPtr->balanceFactor +=1;
-           current->right = NULL;
-           *heightchange = CHANGED;
-         }
-         else{
-           rootPtr->left = NULL;
-           rootPtr->balanceFactor +=1;
-           if(rootPtr->balanceFactor >= 2)
-              avlBalanceRightTree(&rootPtr);
-           else if(rootPtr->balanceFactor <= -2)
-              avlBalanceLeftTree(&rootPtr);
-           else{
-                 rootPtr = rootPtr;
-               }
-            if(rootPtr->balanceFactor!=0)
-              *heightchange = UNCHANGE;
-           else
-             *heightchange = CHANGED;
-         }
-       return current;
-        }
-  }
- else
+    temp1 = *rootPtr;
     *heightchange = CHANGED;
-    return rootPtr;
-
-}
-
-
-
-
+     *rootPtr = NULL;
+     return temp1;
+ }
 
 
 Node *avlRemove(Node **rootPtr, int data){
@@ -94,8 +55,6 @@ Node *avlRemove(Node **rootPtr, int data){
     }
     return avlRemove;
 }
-
-
 
 
 Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange){
@@ -145,8 +104,11 @@ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange){
             //find the nearest in removenode->right->most left
             Node* temp1 = findnearest(&(*root)->right,heightchange);
             //checking whether have heightchange ?
-            if(*heightchange==CHANGED)
+            if(*heightchange==CHANGED){
             (*root)->balanceFactor -=1;
+              if((*root)->balanceFactor !=0)
+              *heightchange = UNCHANGE;
+            }
             else
             (*root)->balanceFactor=(*root)->balanceFactor;
             // Copy the nearest's data to this node
@@ -161,7 +123,6 @@ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange){
             temp1->right= (*root)->right;
             (*root) = temp1;
             }
-			       *heightchange=CHANGED;
              if(*root==NULL){
                return temp;
              }
