@@ -23,7 +23,7 @@ void tearDown(void)
 *  20    75  90
 *        /
 *       70
-**/
+
 void test_findnearest_find_70_expect_70(void){
 
     initNode(&node70,NULL,NULL,0);
@@ -39,6 +39,7 @@ void test_findnearest_find_70_expect_70(void){
     printf("%d\n",root->data);
     TEST_ASSERT_EQUAL(70,root->data);
 }
+**/
 /**
 -----------------remove 40----------------------
 *                   remove 40
@@ -701,35 +702,36 @@ void test_remove_given_Avl_tree_remove_60_test2(void){
 /**
 ---------------------------------------remove 60----------------------------------------
 *
-*                      remove 40
-*               40  ------------------->
-*              /  \
-*            20   50
-*           / \    \
-*         10   30   55
-*               \
-*               35
+*                               remove 40                           rotateleft at 50
+*               40        ------------------->      45            ---------------->         45
+*              /  \                                 / \                                    / \
+*            20   50                               20  50                                 20  55
+*           /    /  \                             /     \                                 /   / \
+*         10    45   55                          10      55                             10   50  60
+*                      \                                   \
+*                       60                                 60
 *
+**/
 
 void test_remove_testing(void){
 
-  initNode(&node40,&node20,&node50,-1);
-  initNode(&node20,&node10,&node30,1);
-  initNode(&node50,NULL,&node55,1);
-  initNode(&node30,NULL,&node35,1);
+  initNode(&node40,&node20,&node50,1);
+  initNode(&node20,&node10,NULL,-1);
+  initNode(&node50,&node45,&node55,1);
+  initNode(&node55,NULL,&node60,1);
   initNode(&node10,NULL,NULL,0);
-  initNode(&node35,NULL,NULL,0);
+  initNode(&node45,NULL,NULL,0);
+  initNode(&node60,NULL,NULL,0);
 
 
   Node *root = &node40;
-  avl_Remove(&root,40);
-  TEST_ASSERT_EQUAL_PTR(&node30,root);
-  TEST_ASSERT_EQUAL_NODE(&node20,&node50,0,&node30);;
-  TEST_ASSERT_EQUAL_NODE(&node35,&node55,0,&node50);
+  avlRemove(&root,40);
+  TEST_ASSERT_EQUAL_PTR(&node45,root);
+  TEST_ASSERT_EQUAL_NODE(&node20,&node55,0,&node45);;
+  TEST_ASSERT_EQUAL_NODE(&node50,&node60,0,&node55);
   TEST_ASSERT_EQUAL_NODE(&node10,NULL,-1,&node20);
   TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node10);
-  TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node35);
-  TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node55);
+  TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node50);
+  TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,&node60);
 
 }
-**/
