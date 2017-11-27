@@ -4,10 +4,9 @@
 #include "rotate.h"
 
 #endif // _REMOVE_H
+ Node *findnearest(Node *rootPtr);
+ Node *findnearest1(Node *rootPtr, int *heightchange);
 
-
- Node *findnearest(Node* node);
- Node *RemoveNode(Node **rootPtr, int nodeToRemove);
- Node *RemoveNode1(Node **rootPtr, int nodeToRemove);
- int deleteNode1(Node **root, int nodeToRemove);
+ Node *avlRemove(Node **rootPtr, int data);
+ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange);
  int deleteNode(Node **root, int nodeToRemove);
