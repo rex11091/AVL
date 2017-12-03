@@ -6,13 +6,10 @@
 #define CHANGED 1
 #define UNCHANGE 0
 
-Node *findnearest1(Node *rootPtr,int *heightchange);
 Node *findnearest(Node **rootPtr, int *heightchange);
-Node *avlRemove1(Node **rootPtr, int data);
-Node *_avlRemove1(Node **root, int nodeToRemove ,int *heightchange);
 Node *avlRemove(Node **rootPtr, int data);
 Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange);
-int deleteNode(Node **root, int nodeToRemove);
+
 
 
 #endif // _REMOVE_H
