@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "node.h"
 #include "rotate.h"
+#include "avlAddInteger.h"
 
 
 
@@ -47,9 +48,9 @@ Node *current = (*rootPtr)->left;
  }
 
 
-Node *avlRemove(Node **rootPtr, int data){
+Node *avlRemove(Node **rootPtr, int data,Compare IntegerCompare){
     int heightchange;
-    Node *avlRemove = _avlRemove(rootPtr, data, &heightchange);
+    Node *avlRemove = _avlRemove(rootPtr, data, &heightchange,IntegerCompare);
     if(avlRemove == NULL){
         printf("deleted value doesn't exist!");
     }
@@ -57,7 +58,7 @@ Node *avlRemove(Node **rootPtr, int data){
 }
 
 
-Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange){
+Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare IntegerCompare){
 
         Node *temp = *root;
         //heightchange to determine either root's heigh change or unchange
@@ -66,21 +67,22 @@ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange){
        if (*root == NULL)
            return NULL; //heigh change
 
-       if(nodeToRemove < (*root)->data ){
-         temp=_avlRemove(&(*root)->left, nodeToRemove,heightchange);
+       int compareResult = IntegerCompare((void *)nodeToRemove,*root);
+       if(compareResult==-1){
+         temp=_avlRemove(&(*root)->left, nodeToRemove,heightchange,IntegerCompare);
          if(*heightchange == CHANGED)
             (*root)->balanceFactor +=1;
             if((*root)->balanceFactor != 0)
             *heightchange = UNCHANGE;
        }
-       else if(nodeToRemove > (*root)->data ){
-         temp=_avlRemove(&(*root)->right, nodeToRemove,heightchange);
+       else  if(compareResult==1){
+         temp=_avlRemove(&(*root)->right, nodeToRemove,heightchange,IntegerCompare);
          if(*heightchange==CHANGED)
             (*root)->balanceFactor -=1;
             if((*root)->balanceFactor != 0)
             *heightchange = UNCHANGE;
        }
-       else if(nodeToRemove == (*root)->data ){
+       else if(compareResult==0){
            // node with only one child or no child
          if( ( (*root)->left == NULL) || ( (*root)->right == NULL) )
          {
@@ -152,5 +154,9 @@ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange){
     else{
           *root = *root;
         }
+    if((*root)->balanceFactor == 0)
+        *heightchange = CHANGED;
+    else
+        *heightchange = UNCHANGE;
     return temp;
 }
