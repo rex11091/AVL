@@ -11,8 +11,8 @@
 typedef int(*Compare)(void *remove , Node *refNode);
 
 Node *findnearest(Node **rootPtr, int *heightchange);
-Node *avlRemove(Node **rootPtr, int data,Compare IntegerCompare);
-Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare IntegerCompare);
+Node *avlRemove(Node **rootPtr, int data,Compare CompareFunc);
+Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare CompareFunc);
 
 
 #endif // _REMOVE_H

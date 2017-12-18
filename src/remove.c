@@ -48,9 +48,9 @@ Node *current = (*rootPtr)->left;
  }
 
 
-Node *avlRemove(Node **rootPtr, int data,Compare IntegerCompare){
+Node *avlRemove(Node **rootPtr, int data,Compare CompareFunc){
     int heightchange;
-    Node *avlRemove = _avlRemove(rootPtr, data, &heightchange,IntegerCompare);
+    Node *avlRemove = _avlRemove(rootPtr, data, &heightchange,CompareFunc);
     if(avlRemove == NULL){
         printf("deleted value doesn't exist!");
     }
@@ -58,7 +58,7 @@ Node *avlRemove(Node **rootPtr, int data,Compare IntegerCompare){
 }
 
 
-Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare IntegerCompare){
+Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare CompareFunc){
 
         Node *temp = *root;
         //heightchange to determine either root's heigh change or unchange
@@ -67,16 +67,16 @@ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare Intege
        if (*root == NULL)
            return NULL; //heigh change
 
-       int compareResult = IntegerCompare((void *)nodeToRemove,*root);
+       int compareResult = CompareFunc((void *)nodeToRemove,*root);
        if(compareResult==-1){
-         temp=_avlRemove(&(*root)->left, nodeToRemove,heightchange,IntegerCompare);
+         temp=_avlRemove(&(*root)->left, nodeToRemove,heightchange,CompareFunc);
          if(*heightchange == CHANGED)
             (*root)->balanceFactor +=1;
             if((*root)->balanceFactor != 0)
             *heightchange = UNCHANGE;
        }
        else  if(compareResult==1){
-         temp=_avlRemove(&(*root)->right, nodeToRemove,heightchange,IntegerCompare);
+         temp=_avlRemove(&(*root)->right, nodeToRemove,heightchange,CompareFunc);
          if(*heightchange==CHANGED)
             (*root)->balanceFactor -=1;
             if((*root)->balanceFactor != 0)

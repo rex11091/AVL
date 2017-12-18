@@ -6,7 +6,7 @@
 
 typedef int(*Compare)(void *add , Node *refNode);
 
-int avlAdd(Node **rootPtr, Node *nodeToAdd,Compare IntegerCompare);
+int avlAdd(Node **rootPtr, Node *nodeToAdd,Compare CompareFunc);
 
 
 #endif // _INSERT_H
