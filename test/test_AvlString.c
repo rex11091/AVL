@@ -18,6 +18,7 @@ void tearDown(void)
 {
 }
 
+    CEXCEPTION_T ex;
 
 /**
 ---------compare----------------------
@@ -65,7 +66,12 @@ void test_AVL_StringAdd_moreThan(void){
    initStringNode(&nodeAmin,NULL,NULL,0);
    StringNode *root = &nodeAli;
 
+   Try{
    avlAddString(&root,&nodeAmin);
+    }Catch(ex){
+    dumpException(ex);
+    }
+    
    TEST_ASSERT_EQUAL_PTR(root,&nodeAli);
    TEST_ASSERT_EQUAL_STRING_NODE(NULL,&nodeAmin,1,&nodeAli);
    TEST_ASSERT_EQUAL_STRING_NODE(NULL,NULL,0,&nodeAmin);
@@ -81,8 +87,11 @@ void test_AVL_StringAdd_moreThan(void){
    initStringNode(&nodeAmin,NULL,NULL,0);
    initStringNode(&nodeAbu,NULL,NULL,0);
    StringNode *root = &nodeAli;
-
-   avlAddString(&root,&nodeAbu);
+   Try{
+     avlAddString(&root,&nodeAbu);
+    }Catch(ex){
+    dumpException(ex);
+    }
    TEST_ASSERT_EQUAL_STRING_NODE(&nodeAbu,&nodeAmin,0,&nodeAli);
    TEST_ASSERT_EQUAL_STRING_NODE(NULL,NULL,0,&nodeAbu);
    TEST_ASSERT_EQUAL_STRING_NODE(NULL,NULL,0,&nodeAmin);
@@ -100,31 +109,15 @@ void test_AVL_StringAdd_moreThan(void){
    initStringNode(&nodeAmin,NULL,NULL,0);
    initStringNode(&nodeAlirosa,NULL,NULL,0);
    StringNode *root = &nodeAli;
-
-   avlAddString(&root,&nodeAmin);
+   Try{
+     avlAddString(&root,&nodeAmin);
+    }Catch(ex){
+    dumpException(ex);
+    }
    TEST_ASSERT_EQUAL_PTR(root,&nodeAlirosa);
    TEST_ASSERT_EQUAL_STRING_NODE(&nodeAli,&nodeAmin,0,&nodeAlirosa);
    TEST_ASSERT_EQUAL_STRING_NODE(NULL,NULL,0,&nodeAli);
    TEST_ASSERT_EQUAL_STRING_NODE(NULL,NULL,0,&nodeAmin);
-}
-/*
-
-       Ali(+1)             add nodeAlirosa
-            \   -------------------------------------?exception  
-            Alirosa
-*/
- void test_AVL_StringAdd_Ali_Alirosa_In_Avltree_add_Alirosa_expect_exception(void){
-   CEXCEPTION_T ex;
-   initStringNode(&nodeAli,NULL,&nodeAlirosa,1);
-   initStringNode(&nodeAlirosa,NULL,NULL,0);
-   StringNode *root = &nodeAli;
-   Try{
-   avlAddString(&root,&nodeAlirosa);
-   }Catch(ex){
-     dumpException(ex);
-     TEST_ASSERT_EQUAL_PTR(&nodeAli,root);
-   }
-     freeException1(ex);
 }
 
 /*
@@ -139,7 +132,11 @@ void test_AVL_StringRemove_Ali_Abu_AMin_remove_Amin(void){
   initStringNode(&nodeAbu,NULL,NULL,0);
   StringNode *root = &nodeAli;
 
-  avlRemoveString(&root,"Amin");
+  Try{
+    avlRemoveString(&root,"Amin");
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL_STRING_NODE(&nodeAbu,NULL,-1,&nodeAli);
   TEST_ASSERT_EQUAL_STRING_NODE(NULL,NULL,0,&nodeAbu);
 }
@@ -155,9 +152,31 @@ void test_AVL_StringRemove_Ali_Abu_Amin_remove_Abu(void){
   initStringNode(&nodeAmin,NULL,NULL,0);
   initStringNode(&nodeAbu,NULL,NULL,0);
   StringNode *root = &nodeAli;
-
-  avlRemoveString(&root,"Abu");
+  Try{
+    avlRemoveString(&root,"Abu");
+  }Catch(ex){
+    dumpException(ex);
+  }
   TEST_ASSERT_EQUAL_PTR(root,&nodeAli);
   TEST_ASSERT_EQUAL_STRING_NODE(NULL,&nodeAmin,1,&nodeAli);
   TEST_ASSERT_EQUAL_STRING_NODE(NULL,NULL,0,&nodeAmin);
+}
+
+/*
+
+       Ali(+1)             add nodeAlirosa
+            \   ------------------------------------->exception
+            Alirosa
+*/
+ void test_AVL_StringAdd_Ali_Alirosa_In_Avltree_add_Alirosa_expect_exception(void){
+   initStringNode(&nodeAli,NULL,&nodeAlirosa,1);
+   initStringNode(&nodeAlirosa,NULL,NULL,0);
+   StringNode *root = &nodeAli;
+   Try{
+   avlAddString(&root,&nodeAlirosa);
+   }Catch(ex){
+     dumpException(ex);
+     TEST_ASSERT_EQUAL_PTR(&nodeAli,root);
+   }
+     freeException1(ex);
 }
