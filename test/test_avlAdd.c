@@ -5,25 +5,33 @@
 #include "nodeVerifier.h"
 #include "rotate.h"
 #include "avlAddInteger.h"
+#include "Exception.h"
+#include "CException.h"
 
-/**
----------rotateLeft----------------------
-*        30 +2                     40
-*       /  \                     /   \
-*      25   40 +1   ------->    30    50
-*           / \                /     /  \
-*          45   50            25    45   60
-*                \
-*                 60
-**/
 
 void setUp(void){
   giveInitdata();
 }
 
 void tearDown(void){
-};
+}
 
+/**
+ *        add same value
+ *    50 ---add 50----> error
+ */
+void test_avlAdd_given_IntegerNode50_add_IntegerNode50_expected_exception_1(void){
+  CEXCEPTION_T ex;
+  Node *root = &node50;
+  initNode(&node50,NULL,NULL,0);
+  Try{
+  avlAddInteger(&root, &node50);
+  TEST_ASSERT_EQUAL(1,ex);
+  }Catch(ex){
+    dumpException(ex);
+  }
+    freeException1(ex);
+}
 
 void test_avlAdd_given_NULL_avlAdd_30_expect_root_30_nochild(void){
 

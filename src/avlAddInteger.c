@@ -2,14 +2,17 @@
 
 
 
-int IntegerCompare(int data, Node *refNode)
+int IntegerCompare(int nodedata, Node *refNode)
 {
+	
+	intNode *temp = (intNode *)refNode;
+    uintptr_t data1 = (uintptr_t)temp->data;
 
-  if (data < refNode->data)
+  if (nodedata < data1)
   {
     return -1;
   }
-  else if(data > refNode->data)
+  else if(nodedata > data1)
   {
     return 1;
   }

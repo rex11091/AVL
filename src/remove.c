@@ -3,6 +3,8 @@
 #include "stdio.h"
 #include "node.h"
 #include "rotate.h"
+#include "Exception.h"
+#include "CException.h"
 #include "avlAddInteger.h"
 
 
@@ -69,6 +71,11 @@ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare Compar
 
        int compareResult = CompareFunc((void *)nodeToRemove,*root);
        if(compareResult==-1){
+         if(temp->left==NULL){
+           Throw(createException("This data cannot be found in this Avl tree ",Data_not_found));
+           *heightchange = UNCHANGE;
+           return temp;
+         }
          temp=_avlRemove(&(*root)->left, nodeToRemove,heightchange,CompareFunc);
          if(*heightchange == CHANGED)
             (*root)->balanceFactor +=1;
@@ -76,6 +83,11 @@ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare Compar
             *heightchange = UNCHANGE;
        }
        else  if(compareResult==1){
+         if(temp->right==NULL){
+           Throw(createException("This data cannot be found in this Avl tree ",Data_not_found));
+          *heightchange = UNCHANGE;
+           return temp;
+         }
          temp=_avlRemove(&(*root)->right, nodeToRemove,heightchange,CompareFunc);
          if(*heightchange==CHANGED)
             (*root)->balanceFactor -=1;

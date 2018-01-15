@@ -3,6 +3,11 @@
 #include "node.h"
 #include "rotate.h"
 #include "avlAddInteger.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+
+#define NODE_ADD_EXIST             90
 
 typedef int(*Compare)(void *add , Node *refNode);
 

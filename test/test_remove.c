@@ -4,6 +4,8 @@
 #include "nodeHelper.h"
 #include "nodeVerifier.h"
 #include "rotate.h"
+#include "Exception.h"
+#include "CException.h"
 #include "avlAddInteger.h"
 
 void setUp(void)
@@ -14,33 +16,28 @@ void setUp(void)
 void tearDown(void)
 {
 }
-
 /**
----------find nearest----------------------
-*       40
-*      /   \
-*   30     80
-*   /      / \
-*  20    75  90
-*        /
-*       70
-
-void test_findnearest_find_70_expect_70(void){
-
-    initNode(&node70,NULL,NULL,0);
-    initNode(&node20,NULL,NULL,0);
-    initNode(&node90,NULL,NULL,0);
-    initNode(&node75,&node70,NULL,-1);
-    initNode(&node30,&node20,NULL,-1);
-    initNode(&node80,&node75,&node90,-1);
-    initNode(&node40,&node30,&node80,1);
-
-    Node *root;
-    root = findnearest(&node80);
-    printf("%d\n",root->data);
-    TEST_ASSERT_EQUAL(70,root->data);
-}
+---------------------------------remove 70------------------------------
+*       40(-1)
+*       /          remove 70
+*     30 (0)  --------------->        exception
+*
 **/
+void test_RemoveNode_given_40_with_child_30_delete_70_expect_exception(void){
+    CEXCEPTION_T ex;
+    initNode(&node30,NULL,NULL,0);
+    initNode(&node40,&node30,NULL,-1);
+    Node *root = &node40;
+
+    Try{
+    avlRemoveInteger(&root,70);
+    }Catch(ex){
+      dumpException(ex);
+      TEST_ASSERT_EQUAL_PTR(&node40,root);
+      TEST_ASSERT_EQUAL_NODE(&node30,NULL,-1,&node40);
+    }
+      freeException1(ex);
+}
 /**
 -----------------remove 40----------------------
 *                   remove 40

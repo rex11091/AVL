@@ -2,10 +2,14 @@
 #define _REMOVE_H
 #include "node.h"
 #include "rotate.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
 #include "avlAddInteger.h"
 
 #define CHANGED 1
 #define UNCHANGE 0
+#define Data_not_found          91
 
 
 typedef int(*Compare)(void *remove , Node *refNode);

@@ -5,6 +5,8 @@
 #include "remove.h"
 #include "stdlib.h"
 #include "string.h"
+#include "AvlString.h"
+#include "CException.h"
 
 
 #define avlAddString(root, nodeToAdd)  avlAdd((Node **)root, (Node *)nodeToAdd,(Compare) StringCompare)
