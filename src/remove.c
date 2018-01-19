@@ -42,11 +42,12 @@ Node *current = (*rootPtr)->left;
        return current;
         }
   }
-  else
+  else{
     temp1 = *rootPtr;
     *heightchange = CHANGED;
      *rootPtr = NULL;
      return temp1;
+  }
  }
 
 
