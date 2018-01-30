@@ -70,7 +70,7 @@ Node *_avlRemove(Node **root, int nodeToRemove ,int *heightchange,Compare Compar
        if (*root == NULL)
            return NULL; //heigh change
 
-       int compareResult = CompareFunc((void *)nodeToRemove,*root);
+       int compareResult = CompareFunc((void *)(intptr_t)nodeToRemove,*root);
        if(compareResult==-1){
          if(temp->left==NULL){
            Throw(createException("This data cannot be found in this Avl tree ",Data_not_found));

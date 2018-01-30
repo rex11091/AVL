@@ -4,9 +4,9 @@
 
 int IntegerCompare(int nodedata, Node *refNode)
 {
-	
-	intNode *temp = (intNode *)refNode;
-    uintptr_t data1 = (uintptr_t)temp->data;
+
+    //int data  = (int)refNode->data;
+    int data1 = (int)((uintptr_t)(refNode->data));
 
   if (nodedata < data1)
   {

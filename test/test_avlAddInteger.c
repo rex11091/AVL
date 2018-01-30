@@ -29,6 +29,7 @@ initNode(&node50,NULL,NULL,0);
 initNode(&node40,&node30,&node50,0);
 
 int m =IntegerCompare(30,&node40);
+printf("%d",m);
 TEST_ASSERT_EQUAL(-1,m);
 }
 

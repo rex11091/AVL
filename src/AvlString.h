@@ -10,7 +10,7 @@
 
 
 #define avlAddString(root, nodeToAdd)  avlAdd((Node **)root, (Node *)nodeToAdd,(Compare) StringCompare)
-#define avlRemoveString(root,data)     *avlRemove((Node **)root,(char *)data ,(Compare) StringCompare);
+#define avlRemoveString(root,data)     *avlRemove((Node **)root,(intptr_t)data ,(Compare) StringCompare);
 
 int StringCompare(char *data,StringNode *refNode);
 #endif // _AVLSTRING_H
