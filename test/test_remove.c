@@ -839,7 +839,7 @@ void test_deleteLeaf_given_deletedNode_left_right_Not_null_delete_15(void)
 *               \
 *               35
 **/
-void test_noderemove_remove_root_40__is_NULL(void)
+void test_noderemove_remove_root_40(void)
 {
     Node *root = &node40;
 

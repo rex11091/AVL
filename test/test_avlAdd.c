@@ -295,3 +295,7 @@ void test_avlAdd_75_given_AVL_need_rotateRightLeft_condition3_expect_balance(voi
      TEST_ASSERT_EQUAL_NODE(&node75,&node100,0,&node80);
      TEST_ASSERT_EQUAL_NODE(&node60,&node80,0,&node70);
 }
+
+
+
+
